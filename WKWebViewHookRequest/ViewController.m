@@ -135,6 +135,7 @@
 @implementation ViewController(WKUIDelegate)
 #pragma mark - WKUIDelegate
 
+///
 - (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures{
     
     if (!navigationAction.targetFrame.isMainFrame) {
@@ -147,16 +148,19 @@
 
 @implementation ViewController(WKNavigationDelegate)
 #pragma mark - WKNavigationDelegate
+/// 页面开始加载
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     
     [self.indicatorView startAnimating];
 }
 
+/// 页面加载完成
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     
     [self.indicatorView stopAnimating];
 }
 
+/// 加载错误
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation
       withError:(NSError *)error {
     
@@ -164,6 +168,7 @@
     [self.indicatorView stopAnimating];
 }
 
+/// 导航错误
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation
       withError:(NSError *)error {
     
@@ -171,12 +176,13 @@
     [self.indicatorView stopAnimating];
 }
 
-
+/// 收到响应后是否跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
+/// 接收到服务器跳转请求
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
     if(webView == self.wkWebView) {
@@ -196,8 +202,10 @@
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
+
 -(BOOL)callback_webViewShouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(NSInteger)navigationType {
     
+    // 自定义拦截跳转请求
     return YES;
 }
 

@@ -26,6 +26,7 @@
 
 - (void)registerClass
 {
+    // 防止苹果静态检查 将 WKBrowsingContextController 拆分，然后再拼凑起来
     NSArray *privateStrArr = @[@"Controller", @"Context", @"Browsing", @"K", @"W"];
     NSString *className =  [[[privateStrArr reverseObjectEnumerator] allObjects] componentsJoinedByString:@""];
     Class cls = NSClassFromString(className);
@@ -33,11 +34,15 @@
     
     if (cls && sel) {
         if ([(id)cls respondsToSelector:sel]) {
+            // 注册自定义协议
+            // [(id)cls performSelector:sel withObject:@"CustomProtocol"];
+            // 注册http协议
             [(id)cls performSelector:sel withObject:HttpProtocolKey];
+            // 注册https协议
             [(id)cls performSelector:sel withObject:HttpsProtocolKey];
         }
     }
-    
+    // SechemaURLProtocol 自定义类 继承于 NSURLProtocol
     [NSURLProtocol registerClass:[SechemaURLProtocol class]];
 }
 

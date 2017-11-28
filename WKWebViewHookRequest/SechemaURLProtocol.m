@@ -25,6 +25,7 @@ NSString *const HttpsProtocolKey = @"https";
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
     NSString *scheme = [[request URL] scheme];
+    // 判断是否需要进入自定义加载器
     if ([scheme caseInsensitiveCompare:HttpProtocolKey] == NSOrderedSame ||
         [scheme caseInsensitiveCompare:HttpsProtocolKey] == NSOrderedSame)
     {
@@ -40,6 +41,7 @@ NSString *const HttpsProtocolKey = @"https";
 + (NSURLRequest *) canonicalRequestForRequest:(NSURLRequest *)request {
     
     NSMutableURLRequest *mutableReqeust = [request mutableCopy];
+    // 执行自定义操作，例如添加统一的请求头等
     return mutableReqeust;
 }
 
