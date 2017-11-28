@@ -10,8 +10,8 @@ hook every loading URL request with use `NSURLProtocol`
     if ([scheme caseInsensitiveCompare:HttpProtocolKey] == NSOrderedSame ||
         [scheme caseInsensitiveCompare:HttpsProtocolKey] == NSOrderedSame)
     {
-        //看看是否已经处理过了，防止无限循环
-        if ([NSURLProtocol propertyForKey:kURLProtocolHandledKey inRequest:request]) {
+        // avoid endless loop
+        if ([NSURLProtocol propertyForKey:kURLProtocolHandledKey inRequest:request]) {
             return NO;
         }
     }
@@ -25,3 +25,7 @@ hook every loading URL request with use `NSURLProtocol`
     return mutableReqeust;
 }
 ```
+
+__screenshot__
+
+![pic](https://github.com/madaoCN/WKWebViewHook/blob/master/pic.png)
